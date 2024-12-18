@@ -61,6 +61,8 @@ const ProductCartItem: React.FC<CartItemProps> = ({
   );
 };
 
+export default ProductCartItem;
+
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
@@ -128,5 +130,3 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
 });
-
-export default ProductCartItem;

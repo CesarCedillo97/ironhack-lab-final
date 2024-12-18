@@ -25,6 +25,7 @@ const ProductListItem = ({product, onPress}: ProductListItemProps) => {
     </TouchableOpacity>
   );
 };
+
 export default memo(ProductListItem);
 
 const styles = StyleSheet.create({

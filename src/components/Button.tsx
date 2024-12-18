@@ -1,5 +1,10 @@
-import {StyleSheet, Text, TouchableOpacity} from 'react-native';
-import React, {useMemo} from 'react';
+import {
+  ActivityIndicator,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+} from 'react-native';
+import React, {memo, useMemo} from 'react';
 import {MainColors} from '../utils/theme';
 
 export type ButtonProps = {
@@ -7,9 +12,16 @@ export type ButtonProps = {
   disabled?: boolean;
   onPress: () => void;
   size?: 'sm' | 'md' | 'full';
+  isLoading?: boolean;
 };
 
-const Button = ({text, disabled, onPress, size}: ButtonProps) => {
+const Button = ({
+  text,
+  disabled,
+  onPress,
+  size,
+  isLoading = false,
+}: ButtonProps) => {
   const width = useMemo(() => {
     return size === 'sm' ? 120 : size === 'md' ? 180 : '90%';
   }, [size]);
@@ -20,14 +32,18 @@ const Button = ({text, disabled, onPress, size}: ButtonProps) => {
         disabled ? styles.disabledButton : styles.enabledButton,
         {width: width},
       ]}
-      disabled={disabled}
+      disabled={disabled || isLoading}
       onPress={onPress}>
-      <Text style={styles.buttonText}>{text}</Text>
+      {isLoading ? (
+        <ActivityIndicator size="small" color="white" />
+      ) : (
+        <Text style={styles.buttonText}>{text}</Text>
+      )}
     </TouchableOpacity>
   );
 };
 
-export default Button;
+export default memo(Button);
 
 const styles = StyleSheet.create({
   button: {

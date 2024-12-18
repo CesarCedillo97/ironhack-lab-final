@@ -25,10 +25,28 @@ type ProductsApiResponse = {
   limit: number;
 };
 
+type LoginUserResponse = {
+  id: number;
+  username: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  gender: string;
+  image: string;
+  accessToken: string;
+  refreshToken: string;
+};
+
 type ApiResponse<T> = {
   success: boolean;
   data?: T;
   error?: string;
 };
 
-export {Product, ProductsApiResponse, ProductInCart, ApiResponse};
+export {
+  Product,
+  ProductsApiResponse,
+  ProductInCart,
+  LoginUserResponse,
+  ApiResponse,
+};

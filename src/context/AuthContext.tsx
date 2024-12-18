@@ -1,4 +1,14 @@
-import React, {createContext, useContext, useState, ReactNode} from 'react';
+import React, {
+  createContext,
+  useContext,
+  useState,
+  ReactNode,
+  useEffect,
+} from 'react';
+import GetLocalStorageData from '../storage/GetLocalStorageData';
+import {LoginUserResponse} from '../utils/types';
+import {StorageKeys} from '../storage/StorageKeys';
+import SaveToLocalStorage from '../storage/SaveToLocalStorage';
 
 interface AuthContextProps {
   isAuthenticated: boolean;
@@ -15,8 +25,24 @@ interface AuthProviderProps {
 export const AuthProvider: React.FC<AuthProviderProps> = ({children}) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
+  useEffect(() => {
+    getUserData();
+  }, []);
+
+  const getUserData = async () => {
+    const storedUser = await GetLocalStorageData<LoginUserResponse>(
+      StorageKeys.USER,
+    );
+    if (storedUser.success && storedUser.data) {
+      setIsAuthenticated(true);
+    }
+  };
+
   const login = () => setIsAuthenticated(true);
-  const logout = () => setIsAuthenticated(false);
+  const logout = async () => {
+    await SaveToLocalStorage<LoginUserResponse | null>(StorageKeys.USER, null);
+    setIsAuthenticated(false);
+  };
 
   return (
     <AuthContext.Provider value={{isAuthenticated, login, logout}}>

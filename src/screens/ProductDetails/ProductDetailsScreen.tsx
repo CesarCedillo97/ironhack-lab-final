@@ -143,7 +143,7 @@ const styles = StyleSheet.create({
   },
   picker: {
     width: '90%',
-    height: 45,
+    height: 47,
     borderWidth: 1,
     backgroundColor: '#edf3f5',
     borderRadius: 8,
