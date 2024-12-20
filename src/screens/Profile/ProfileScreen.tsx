@@ -10,8 +10,11 @@ import {StorageKeys} from '../../storage/StorageKeys';
 import {TextColors} from '../../utils/theme';
 import {useAuth} from '../../context/AuthContext';
 import Button from '../../components/Button';
+import {useTranslation} from 'react-i18next';
 
 const ProfileScreen = () => {
+  const {t} = useTranslation();
+
   const [pageStatus, setPageStatus] = useState<PageStatus>(PageStatus.LOADING);
   const [userData, setUserData] = useState<LoginUserResponse | null>(null);
 
@@ -38,7 +41,7 @@ const ProfileScreen = () => {
 
   const renderContent = () => {
     if (pageStatus === PageStatus.LOADING) {
-      return <Text style={styles.loadingText}>Loading...</Text>;
+      return <Text style={styles.loadingText}>{t('loading')}</Text>;
     }
 
     if (userData) {
@@ -52,7 +55,11 @@ const ProfileScreen = () => {
           <Text style={styles.email}>{userData.email}</Text>
           <Text style={styles.gender}>{userData.gender}</Text>
 
-          <Button text="Cerrar sesión" onPress={() => logout()} size="full" />
+          <Button
+            text={t('closeSession')}
+            onPress={() => logout()}
+            size="full"
+          />
         </View>
       );
     }
@@ -60,7 +67,7 @@ const ProfileScreen = () => {
 
   return (
     <>
-      <DrawerHeader title="Profile" />
+      <DrawerHeader title={t('profileScreenHeader')} />
       <View style={styles.container}>{renderContent()}</View>
     </>
   );

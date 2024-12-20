@@ -1,79 +1,107 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# README de la App de E-commerce
 
-# Getting Started
+## Resumen
 
->**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
+Esta aplicación es una plataforma de comercio electrónico diseñada para brindar una experiencia de usuario fluida. Incluye módulos de autenticación (login y sign-in), navegación avanzada, un carrito de compras, un buscador, y la capacidad de cambiar el idioma de la app. Actualmente, el módulo de sign-in no está funcional debido a la falta de una API para crear usuarios.
 
-## Step 1: Start the Metro Server
+### Características principales
 
-First, you will need to start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.
+- **Autenticación**: Permite el login de usuarios para acceder a funciones avanzadas.
+- **Navegación avanzada**: Cambia dinámicamente la estructura de navegación según el estado de autenticación.
+- **Carrito de compras**: Permite agregar productos con cantidades personalizadas.
+- **Soporte multilingüe**: La aplicación puede cambiar de idioma desde la sección de ajustes.
+- **Perfil de usuario**: Visualización de información del usuario y opción para cerrar sesión.
+- **Optimización de imágenes**: Uso de la librería `FastImage` para un mejor manejo de caché de imágenes.
+- **Búsqueda optimizada**: Uso de debounce para optimizar las consultas de búsqueda.
 
-To start Metro, run the following command from the _root_ of your React Native project:
+---
 
-```bash
-# using npm
-npm start
+## Estructura de navegación
 
-# OR using Yarn
-yarn start
-```
+1. **Navegación inicial**:
+   - Se verifica si el usuario está autenticado. Si no lo está, se muestra un stack de autenticación.
+2. **Navegación principal**:
+   - **TabNavigator**:
+     - Inicio.
+     - Buscador.
+     - Carrito.
+   - **StackNavigator**:
+     - Detalles de producto: permite agregar productos al carrito.
+   - **DrawerNavigator**:
+     - Configuración (ajustes de idioma).
+     - Perfil (información del usuario y opción para cerrar sesión).
 
-## Step 2: Start your Application
+---
 
-Let Metro Bundler run in its _own_ terminal. Open a _new_ terminal from the _root_ of your React Native project. Run the following command to start your _Android_ or _iOS_ app:
+## Personalizaciones realizadas
 
-### For Android
+- **Optimización de componentes**:
+  - Uso de `React.memo` para evitar renders innecesarios.
+  - Uso de `useMemo` para memorizar constantes y mejorar el rendimiento.
+- **Soporte multilingüe**:
+  - Implementación de traducción completa de la app.
+- **Caché de imágenes**:
+  - Uso de la librería `FastImage` para mejorar la carga y rendimiento de imágenes.
 
-```bash
-# using npm
-npm run android
+---
 
-# OR using Yarn
-yarn android
-```
+## Optimización de rendimiento
 
-### For iOS
+- **Optimización de navegación**:
+  - Uso de navegación avanzada para evitar renders innecesarios.
+- **Manejo eficiente de estado**:
+  - Uso de Context API para el estado de autenticación.
+  - Uso de Async Storage para persistencia de datos locales (usuario, carrito, idioma).
+- **Búsqueda optimizada**:
+  - Implementación de debounce para reducir el número de consultas innecesarias al realizar búsquedas.
 
-```bash
-# using npm
-npm run ios
+---
 
-# OR using Yarn
-yarn ios
-```
+## Manejo del estado
 
-If everything is set up _correctly_, you should see your new app running in your _Android Emulator_ or _iOS Simulator_ shortly provided you have set up your emulator/simulator correctly.
+- **Context API**:
+  - Usado para manejar el estado global de autenticación del usuario.
+- **Async Storage**:
+  - Almacena información del usuario, contenido del carrito y configuración de idioma.
 
-This is one way to run your app — you can also run it directly from within Android Studio and Xcode respectively.
+---
 
-## Step 3: Modifying your App
+## Retos enfrentados
 
-Now that you have successfully run the app, let's modify it.
+1. **Problemas con permisos en macOS**:
+   - Se requirieron permisos de administrador constantemente, y algunos ajustes se reseteaban de forma inesperada.
+2. **Falta de tiempo**:
+   - Limitaciones en el tiempo disponible debido a actividades fuera del horario laboral.
+3. **Priorización**:
+   - Se priorizó la funcionalidad y el diseño sobre herramientas de monitoreo.
+4. **Curva de aprendizaje en navegación**:
+   - Inicialmente confusa, pero se logró dominar la estructura.
+5. **Falta de API adecuada**:
+   - Dificultad para encontrar una API externa que cubriera todas las necesidades.
 
-1. Open `App.tsx` in your text editor of choice and edit some lines.
-2. For **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Developer Menu** (<kbd>Ctrl</kbd> + <kbd>M</kbd> (on Window and Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (on macOS)) to see your changes!
+---
 
-   For **iOS**: Hit <kbd>Cmd ⌘</kbd> + <kbd>R</kbd> in your iOS Simulator to reload the app and see your changes!
+## Credenciales para prueba
 
-## Congratulations! :tada:
+- **Username**: `emilys`
+- **Password**: `emilyspass`
 
-You've successfully run and modified your React Native App. :partying_face:
+---
 
-### Now what?
+## Instrucciones para correr la aplicación
 
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [Introduction to React Native](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you can't get this to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+1. Asegúrate de contar con la versión **Node.js v20.18.1**.
+2. Ejecuta el comando:
+   ```bash
+   npm install
+   ```
+3. Inicia la aplicación en Android o iOS:
+   - Android:
+     ```bash
+     npm run android
+     ```
+   - iOS:
+     ```bash
+     npm run ios
+     ```
+4. Asegúrate de tener configurados los emuladores correspondientes para el desarrollo.

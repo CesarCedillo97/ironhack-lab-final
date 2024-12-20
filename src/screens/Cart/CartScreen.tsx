@@ -11,8 +11,11 @@ import {FlatList} from 'react-native-gesture-handler';
 import ProductCartItem from '../../components/ProductCartItem';
 import {useFocusEffect} from '@react-navigation/native';
 import {MainColors, TextColors} from '../../utils/theme';
+import {useTranslation} from 'react-i18next';
 
 const CartScreen = () => {
+  const {t} = useTranslation();
+
   const [pageStatus, setPageStatus] = useState<PageStatus>(PageStatus.LOADING);
   const [productsInCart, setproductsInCart] = useState<ProductInCart[]>([]);
   const [total, setTotal] = useState<number>(0);
@@ -73,19 +76,19 @@ const CartScreen = () => {
     <View style={styles.container}>
       {pageStatus === PageStatus.LOADING && (
         <View style={styles.emptysContainers}>
-          <Text style={styles.emptysContainersText}>cargando...</Text>
+          <Text style={styles.emptysContainersText}>{t('loading')}</Text>
         </View>
       )}
       {pageStatus === PageStatus.ERROR && (
         <View style={styles.emptysContainers}>
-          <Text style={styles.emptysContainersText}>Ocurió un errro...</Text>
+          <Text style={styles.emptysContainersText}>{t('errorText')}</Text>
           <Button onPress={getData} size="sm" text="Reintentar" />
         </View>
       )}
 
       {pageStatus === PageStatus.NO_CONTENT && (
         <View style={styles.emptysContainers}>
-          <Text style={styles.emptysContainersText}>No hay contenido</Text>
+          <Text style={styles.emptysContainersText}>{t('noContent')}</Text>
         </View>
       )}
 
@@ -105,7 +108,7 @@ const CartScreen = () => {
             />
           </View>
           <View style={styles.totalContainer}>
-            <Text style={styles.totalLabel}>Total</Text>
+            <Text style={styles.totalLabel}>{t('total')}</Text>
             <Text style={styles.totalQuantityText}>${total}</Text>
           </View>
         </>

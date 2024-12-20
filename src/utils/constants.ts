@@ -1,3 +1,5 @@
+import {AvalibleLanguagesType} from './types';
+
 enum ApiUrls {
   BASE_URL = 'https://dummyjson.com',
   GET_PRODUCTS = '/products',
@@ -12,4 +14,15 @@ enum PageStatus {
   ERROR = 'ERROR',
 }
 
-export {ApiUrls, PageStatus};
+const AvalibleLanguages: AvalibleLanguagesType[] = [
+  {
+    languageName: 'Español',
+    languageCode: 'es',
+  },
+  {
+    languageName: 'English',
+    languageCode: 'en',
+  },
+];
+
+export {ApiUrls, PageStatus, AvalibleLanguages};

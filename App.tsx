@@ -4,9 +4,26 @@ import {SafeAreaProvider} from 'react-native-safe-area-context';
 import RootNavigator from './src/navigation/RootNavigator';
 import {Alert, Linking, StyleSheet} from 'react-native';
 import {AuthProvider} from './src/context/AuthContext';
+import {I18nextProvider} from 'react-i18next';
+import i18n from './i18n';
+import GetLocalStorageData from './src/storage/GetLocalStorageData';
+import {StorageKeys} from './src/storage/StorageKeys';
+import {AvalibleLanguages} from './src/utils/constants';
 
 const App = () => {
+  const setLanguage = async () => {
+    const savedLanguage = await GetLocalStorageData<AvalibleLanguages>(
+      StorageKeys.LANGUAGE,
+    );
+    if (savedLanguage.success && savedLanguage.data) {
+      i18n.changeLanguage(savedLanguage.data);
+    } else {
+      i18n.changeLanguage('es');
+    }
+  };
+
   useEffect(() => {
+    setLanguage();
     const handleInitialLink = async () => {
       const initialUrl = await Linking.getInitialURL();
       if (initialUrl) {
@@ -36,13 +53,15 @@ const App = () => {
     }
   };
   return (
-    <AuthProvider>
-      <GestureHandlerRootView style={styles.container}>
-        <SafeAreaProvider>
-          <RootNavigator />
-        </SafeAreaProvider>
-      </GestureHandlerRootView>
-    </AuthProvider>
+    <I18nextProvider i18n={i18n}>
+      <AuthProvider>
+        <GestureHandlerRootView style={styles.container}>
+          <SafeAreaProvider>
+            <RootNavigator />
+          </SafeAreaProvider>
+        </GestureHandlerRootView>
+      </AuthProvider>
+    </I18nextProvider>
   );
 };
 

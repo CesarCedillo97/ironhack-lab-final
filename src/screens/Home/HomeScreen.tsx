@@ -11,10 +11,13 @@ import {TextColors} from '../../utils/theme';
 import {Product} from '../../utils/types';
 import getProducts from '../../api/getProducts';
 import Button from '../../components/Button';
+import {useTranslation} from 'react-i18next';
 
 type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Home'>;
 
 const HomeScreen = () => {
+  const {t} = useTranslation();
+
   const navigation = useNavigation<HomeScreenNavigationProp>();
   const [pageStatus, setPageStatus] = useState<PageStatus>(PageStatus.LOADING);
   const [products, setproducts] = useState<Product[]>([]);
@@ -50,29 +53,29 @@ const HomeScreen = () => {
 
   return (
     <>
-      <DrawerHeader title="Inicio" />
+      <DrawerHeader title={t('homeScreenHeader')} />
       <View style={styles.container}>
         {pageStatus === PageStatus.LOADING && (
           <View style={styles.emptysContainers}>
-            <Text style={styles.emptysContainersText}>cargando...</Text>
+            <Text style={styles.emptysContainersText}>{t('loading')}</Text>
           </View>
         )}
         {pageStatus === PageStatus.ERROR && (
           <View style={styles.emptysContainers}>
-            <Text style={styles.emptysContainersText}>Ocurió un errro...</Text>
+            <Text style={styles.emptysContainersText}>{t('errorText')}</Text>
             <Button onPress={getData} size="sm" text="Reintentar" />
           </View>
         )}
 
         {pageStatus === PageStatus.NO_CONTENT && (
           <View style={styles.emptysContainers}>
-            <Text style={styles.emptysContainersText}>N hay contenido</Text>
+            <Text style={styles.emptysContainersText}>{t('noContent')}</Text>
           </View>
         )}
 
         {pageStatus === PageStatus.CONTENT && (
           <>
-            <Text style={styles.header}>Productos</Text>
+            <Text style={styles.header}>{t('products')}</Text>
 
             <FlatList
               data={products}

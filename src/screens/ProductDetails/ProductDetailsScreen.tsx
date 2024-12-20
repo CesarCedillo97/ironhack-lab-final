@@ -11,6 +11,7 @@ import {StorageKeys} from '../../storage/StorageKeys';
 import {Picker} from '@react-native-picker/picker';
 import {ProductInCart} from '../../utils/types';
 import GetLocalStorageData from '../../storage/GetLocalStorageData';
+import {useTranslation} from 'react-i18next';
 
 type DetailsScreenRouteProp = RouteProp<RootStackParamList, 'Details'>;
 
@@ -19,6 +20,8 @@ type ProductDetailsScreenProps = {
 };
 
 const ProductDetailsScreen: React.FC<ProductDetailsScreenProps> = () => {
+  const {t} = useTranslation();
+
   const route = useRoute<DetailsScreenRouteProp>();
   const {product} = route.params;
   const {title, price, description, stock} = product;
@@ -50,10 +53,9 @@ const ProductDetailsScreen: React.FC<ProductDetailsScreenProps> = () => {
         await SaveToLocalStorage(StorageKeys.CART, productsInCart.data);
       }
 
-      Alert.alert('¡Listo!', `${quantity} productos agregados al carrito.`);
+      Alert.alert('¡Listo!', `${quantity} ${t('productsAdded')}`);
     } catch (error) {
-      console.error('Error al agregar al carrito:', error);
-      Alert.alert('Error', 'No se pudo agregar el producto al carrito.');
+      Alert.alert('Error', `${quantity} ${t('productsNotAddedError')}`);
     }
   };
 
@@ -91,7 +93,7 @@ const ProductDetailsScreen: React.FC<ProductDetailsScreenProps> = () => {
           </Picker>
         </View>
         <View style={styles.buttonContainer}>
-          <Button text="Agregar al carrito" size="md" onPress={addToCart} />
+          <Button text={t('addToCart')} size="md" onPress={addToCart} />
         </View>
       </View>
     </SafeAreaView>

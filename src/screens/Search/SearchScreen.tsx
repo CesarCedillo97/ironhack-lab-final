@@ -9,6 +9,7 @@ import {debounce} from 'lodash';
 import {PageStatus} from '../../utils/constants';
 import searchProducts from '../../api/searchProducts';
 import Button from '../../components/Button';
+import {useTranslation} from 'react-i18next';
 
 type HomeScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -16,6 +17,8 @@ type HomeScreenNavigationProp = StackNavigationProp<
 >;
 
 const SearchScreen: React.FC = () => {
+  const {t} = useTranslation();
+
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const navigation = useNavigation<HomeScreenNavigationProp>();
@@ -63,24 +66,24 @@ const SearchScreen: React.FC = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.headerText}>Buscador de productos</Text>
+      <Text style={styles.headerText}>{t('productSearchTitle')}</Text>
 
       <TextInput
         style={styles.searchInput}
-        placeholder="Search products..."
+        placeholder={t('productSearchPlaceholder')}
         value={searchQuery}
         onChangeText={handleOnChange}
       />
       {pageStatus === PageStatus.LOADING && (
         <View style={styles.emptysContainers}>
           <Text style={styles.emptysContainersText}>
-            Obtniendo productos...
+            {t('gettingProducts')}
           </Text>
         </View>
       )}
       {pageStatus === PageStatus.ERROR && (
         <View style={styles.emptysContainers}>
-          <Text style={styles.emptysContainersText}>Ocurió un errro...</Text>
+          <Text style={styles.emptysContainersText}>{t('errorText')}</Text>
           <Button
             onPress={() => {
               debouncedGetData(searchQuery);
@@ -93,7 +96,7 @@ const SearchScreen: React.FC = () => {
 
       {pageStatus === PageStatus.NO_CONTENT && (
         <View style={styles.emptysContainers}>
-          <Text style={styles.emptysContainersText}>N hay contenido</Text>
+          <Text style={styles.emptysContainersText}>{t('noContent')}</Text>
         </View>
       )}
 

@@ -10,6 +10,7 @@ import SaveToLocalStorage from '../../storage/SaveToLocalStorage';
 import {StorageKeys} from '../../storage/StorageKeys';
 import {LoginUserResponse} from '../../utils/types';
 import {PageStatus} from '../../utils/constants';
+import {useTranslation} from 'react-i18next';
 
 type LoginScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -17,6 +18,8 @@ type LoginScreenNavigationProp = StackNavigationProp<
 >;
 
 const LoginScreen: React.FC = () => {
+  const {t} = useTranslation();
+
   const navigation = useNavigation<LoginScreenNavigationProp>();
   const {login} = useAuth();
   const [username, setUsername] = useState('');
@@ -29,7 +32,7 @@ const LoginScreen: React.FC = () => {
   const handleLogin = async () => {
     setscreenState(PageStatus.LOADING);
     if (username === '' || password === '') {
-      seterrorMessage('Correo o contraseña incorrectos');
+      seterrorMessage(t('genericErrorMessage'));
       setscreenState(PageStatus.CONTENT);
       return;
     }
@@ -48,18 +51,18 @@ const LoginScreen: React.FC = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Iniciar Sesión</Text>
+      <Text style={styles.header}>{t('loginScreenHeader')}</Text>
 
       <TextInput
         style={styles.input}
-        placeholder="Username"
+        placeholder={t('userNamePlaceHolder')}
         value={username}
         onChangeText={setUsername}
       />
 
       <TextInput
         style={styles.input}
-        placeholder="Contraseña"
+        placeholder={t('passwordPlaceHolder')}
         value={password}
         onChangeText={setPassword}
         secureTextEntry
@@ -67,15 +70,15 @@ const LoginScreen: React.FC = () => {
       <Text style={styles.errorText}>{errorMessage}</Text>
 
       <Button
-        text="Iniciar sesión"
+        text={t('loginButton')}
         onPress={handleLogin}
         isLoading={screenState === PageStatus.LOADING}
       />
 
       <View style={styles.signupContainer}>
-        <Text>¿No tienes una cuenta? </Text>
+        <Text>{t('registerQuestion')}</Text>
         <Button
-          text="Regístrate"
+          text={t('registerText')}
           size="md"
           onPress={() => navigation.replace('Register')}
         />

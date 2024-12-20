@@ -43,10 +43,16 @@ type ApiResponse<T> = {
   error?: string;
 };
 
+type AvalibleLanguagesType = {
+  languageName: string;
+  languageCode: 'en' | 'es';
+};
+
 export {
   Product,
   ProductsApiResponse,
   ProductInCart,
   LoginUserResponse,
   ApiResponse,
+  AvalibleLanguagesType,
 };

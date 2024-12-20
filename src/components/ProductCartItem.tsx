@@ -2,6 +2,7 @@ import React from 'react';
 import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import {ProductInCart} from '../utils/types';
 import {MainColors, TextColors} from '../utils/theme';
+import {useTranslation} from 'react-i18next';
 
 type CartItemProps = {
   item: ProductInCart;
@@ -15,6 +16,7 @@ const ProductCartItem: React.FC<CartItemProps> = ({
   onQuantityChange,
 }) => {
   const {product, quantityInCart} = item;
+  const {t} = useTranslation();
 
   const handleIncrease = () => {
     if (quantityInCart < product.stock) {
@@ -37,7 +39,9 @@ const ProductCartItem: React.FC<CartItemProps> = ({
       <View style={styles.details}>
         <Text style={styles.title}>{product.title}</Text>
         <Text style={styles.price}>${product.price.toFixed(2)}</Text>
-        <Text style={styles.stock}>Stock: {product.stock}</Text>
+        <Text style={styles.stock}>
+          {t('stock')} {product.stock}
+        </Text>
 
         <View style={styles.quantityContainer}>
           <TouchableOpacity onPress={handleDecrease} style={styles.button}>
@@ -55,7 +59,7 @@ const ProductCartItem: React.FC<CartItemProps> = ({
       <TouchableOpacity
         onPress={() => onRemove(product.id.toString())}
         style={styles.removeButton}>
-        <Text style={styles.removeButtonText}>Eliminar</Text>
+        <Text style={styles.removeButtonText}>{t('delete')}</Text>
       </TouchableOpacity>
     </View>
   );
